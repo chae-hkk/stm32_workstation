@@ -27,4 +27,3 @@ int main(void){
 }
 
 
-//문제: 너무 blinking이 깔끔하지 않고 빠름
