@@ -1,29 +1,30 @@
 #include "main.h"
-#include "GPIO.h"
 
-int main(void)
-{
-  // Enable GPIOA, GPIOB, GPIOC and GPIOD and configure PA5 as an output pin
-  RCC->IOPENR |= (1UL << 3 | 1UL<<2 | 1UL<<1 | 1UL<<0);
-  GPIOA->MODER &= ~(3UL<<10);
-  GPIOA->MODER |= (1UL<<10);
-  //configure PD1 as an output pin
-  GPIOD->MODER &= ~(3UL<<2);
-  GPIOD->MODER |= (1UL<<2);
-  //Configure PC13 Input
-  GPIOC->MODER &= ~(3UL << 26);
-  //Configure Pull-UP PC13
-  GPIOC->PUPDR &= ~(3UL << 26);
-  GPIOC->PUPDR |= (1UL << 26);
-  while (1)
-  {
-    // Turn OFF LED1 PA5 is the button is pressed
-    GPIO_Write(GPIO_Read());
-    // Toggle the state of PD2
-    GPIO_Toggle();
-    for(uint32_t i = 0; i < 60000; i++);
-    // call a delay using for
+//PA5로 LED blinking
 
+//단계
+//SYSCLK 설정하기
+//A 포트 클럭 켜기
+//MODE register로 핀의 모드 설정
+//속도 설정
+//while 문 활용, ODR로 켜고 끄기
+
+int main(void){
+  RCC->IOPENR |= (1UL << 0); //portA clock 실행
+
+  GPIOA->MODER &= ~(3UL << (2*5)); // stm32 초기 설정11을 00으로 변경하기 위함
+  
+  GPIOA->MODER |= (1UL << (2*5)); //portA output Mode
+  
+  GPIOA->OSPEEDR |= (1UL << (2*5));
+
+  while(1){ //LED Blinking Process
+    GPIOA->ODR |= (1UL << 5);
+    for(uint32_t i = 0; i < 1000000; i++);
+    GPIOA->ODR &= ~(1UL << 5);
+    for(uint32_t i = 0; i< 1000000; i++);
   }
-  return 0;
 }
+
+
+//문제: 너무 blinking이 깔끔하지 않고 빠름
