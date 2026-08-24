@@ -30,4 +30,4 @@ Forked from WelsTheory/stm32_hello_cmsis_wokwi.
 
 ## Write-up
 
-Full walkthrough (in Korean): velog post
+Full walkthrough (in Korean): https://velog.io/@chay327/STM32-레지스터-제어로-LED-깜빡이기
