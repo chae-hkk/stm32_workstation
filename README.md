@@ -1,25 +1,33 @@
 # STM32 Nucleo64 C031C6 with Wokwi Simulation
+## LED BLinking using register and No HAL
+
 
 [![Build and Simulate in Wokwi](https://github.com/wokwi/stm32-hello-wokwi/actions/workflows/ci.yml/badge.svg)](https://github.com/wokwi/stm32-hello-wokwi/actions/workflows/ci.yml)
 
-A simple "Hello World without HAL" example showing how to run an STM32 project in [Wokwi for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=wokwi.wokwi-vscode).
+Blinking the onboard LED (LD4, PA5) on a NUCLEO-C031C6 board using direct register access — no HAL.
+Built and simulated entirely in the browser via GitHub Codespaces + Wokwi, with no local installation required.
 
-![Imagen](/Img/Hello_VsCode.PNG)
 
-## Building
-
-We recommend using the [STM32 VS Code extension](https://marketplace.visualstudio.com/items?itemName=stmicroelectronics.stm32-vscode-extension) to build the project. You will also need to install [STM32CubeCLT](https://www.st.com/en/development-tools/stm32cubeclt.html#get-software).
-
-You can also build the project from the command line:
-
-```bash
+## Build & run
+``` bash
+sudo apt update && sudo apt install -y gcc-arm-none-eabi make
 make
 ```
 
-Make sure you have the [Arm GNU Toolchain](https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads) installed.
+Then, with the Wokwi for VS Code extension installed:
 
-## Simulation
+1. F1 → Wokwi: Request a new License (once)
+2. F1 → Wokwi: Start Simulator
 
-To simulate this project, install [Wokwi for VS Code](https://marketplace.visualstudio.com/items?itemName=wokwi.wokwi-vscode). Open the project directory in Visual Studio Code, press **F1** and select "Wokwi: Start Simulator".
+## References
+STM32C031C4/C6 Datasheet (DS14431)
+RM0490 — STM32C0 Series Reference Manual
+UM2953 — STM32 Nucleo-64 boards (MB1717) User Manual
 
-Once the simulation is running, you should see the text "Hello, Wowki!" in the Serial monitor.
+## Credits
+
+Forked from WelsTheory/stm32_hello_cmsis_wokwi.
+
+## Write-up
+
+Full walkthrough (in Korean): https://velog.io/@chay327/STM32-레지스터-제어로-LED-깜빡이기
