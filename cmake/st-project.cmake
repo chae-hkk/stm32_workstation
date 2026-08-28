@@ -7,16 +7,18 @@ target_compile_definitions(
     ${TARGET_NAME} PRIVATE
     "$<$<AND:$<CONFIG:Debug>,$<COMPILE_LANGUAGE:ASM>>:DEBUG>"
     "$<$<AND:$<CONFIG:Debug>,$<COMPILE_LANGUAGE:C>>:DEBUG>"
-    "$<$<AND:$<CONFIG:Debug>,$<COMPILE_LANGUAGE:C>>:STM32C031xx>"
-    "$<$<AND:$<NOT:$<CONFIG:Debug>>,$<COMPILE_LANGUAGE:C>>:NUCLEO_C031C6>"
-    "$<$<AND:$<NOT:$<CONFIG:Debug>>,$<COMPILE_LANGUAGE:C>>:STM32>"
-    "$<$<AND:$<NOT:$<CONFIG:Debug>>,$<COMPILE_LANGUAGE:C>>:STM32C0>"
-    "$<$<AND:$<NOT:$<CONFIG:Debug>>,$<COMPILE_LANGUAGE:C>>:STM32C031C6Tx>"
+    "$<$<COMPILE_LANGUAGE:C>:STM32C031xx>"
+    "$<$<COMPILE_LANGUAGE:C>:NUCLEO_C031C6>"
+    "$<$<COMPILE_LANGUAGE:C>:STM32>"
+    "$<$<COMPILE_LANGUAGE:C>:STM32C0>"
+    "$<$<COMPILE_LANGUAGE:C>:STM32C031C6Tx>"
 )
 
 target_include_directories(
     ${TARGET_NAME} PRIVATE
-    "$<$<AND:$<NOT:$<CONFIG:Debug>>,$<COMPILE_LANGUAGE:C>>:${PROJECT_SOURCE_DIR}/Inc>"
+    "$<$<COMPILE_LANGUAGE:C>:${PROJECT_SOURCE_DIR}/Core/Inc>"
+    "$<$<COMPILE_LANGUAGE:C>:${PROJECT_SOURCE_DIR}/Peripheral/Inc>"
+    "$<$<COMPILE_LANGUAGE:C>:${PROJECT_SOURCE_DIR}/CMSIS/Include>"
 )
 
 target_compile_options(
@@ -50,17 +52,16 @@ target_link_options(
     "$<$<CONFIG:Debug>:-mcpu=cortex-m0plus>"
     "$<$<NOT:$<CONFIG:Debug>>:-mcpu=cortex-m0plus>"
     -T
-    "$<$<CONFIG:Debug>:${PROJECT_SOURCE_DIR}/STM32C031C6TX_FLASH.ld>"
-    "$<$<NOT:$<CONFIG:Debug>>:${PROJECT_SOURCE_DIR}/STM32C031C6TX_FLASH.ld>"
+    "$<$<CONFIG:Debug>:${PROJECT_SOURCE_DIR}/STM32C031C6Tx_FLASH.ld>"
+    "$<$<NOT:$<CONFIG:Debug>>:${PROJECT_SOURCE_DIR}/STM32C031C6Tx_FLASH.ld>"
 )
 
 target_sources(
     ${TARGET_NAME} PRIVATE
-    "Core\\Src\\main.c"
-    "Core\\Src\\system_stm32c0xx.c"
-    "Peripheral\\Src\\GPIO_Libreria.c"
-    "Startup\\startup_stm32c031c6tx.s"
-    "startup_stm32c031xx.s"
+    "Core/Src/main.c"
+    "Core/Src/system_stm32c0xx.c"
+    "Peripheral/Src/GPIO.c"
+    "Startup/startup_stm32c031c6tx.s"
 )
 
 add_custom_command(
